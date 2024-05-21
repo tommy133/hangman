@@ -24,4 +24,22 @@ defmodule HangImplGameTestImpl do
       assert new_game == game
     end
   end
+
+  test "a duplicate letter is reported" do
+    game = Game.new_game()
+    {new_game, _tally} = Game.make_move(game, "x")
+    assert new_game.game_state !== :already_used
+    {new_game, _tally} = Game.make_move(new_game, "y")
+    assert new_game.game_state !== :already_used
+    {new_game, _tally} = Game.make_move(new_game, "x")
+    assert new_game.game_state == :already_used
+  end
+
+  test "we record letters used" do
+    game = Game.new_game()
+    {new_game, _tally} = Game.make_move(game, "x")
+    {new_game, _tally} = Game.make_move(new_game, "y")
+
+    assert MapSet.equal?(new_game.used, MapSet.new(["x", "y"]))
+  end
 end
