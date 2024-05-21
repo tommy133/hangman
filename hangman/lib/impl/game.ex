@@ -11,8 +11,12 @@ defmodule Hangman.Impl.Game do
             used: MapSet.new()
 
   def new_game do
+    new_game(Dictionary.random_word())
+  end
+
+  def new_game(word) do
     %__MODULE__{
-      letters: Dictionary.random_word() |> String.codepoints()
+      letters: word |> String.codepoints()
     }
   end
 end
