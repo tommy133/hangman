@@ -3,6 +3,7 @@ defmodule Hangman do
   alias Hangman.Type
   # opaque - keep ur fingers out of my internal state outside this module
   @opaque game :: Game.t()
+  @type tally :: Type.tally()
 
   @spec new_game() :: game
   # def new_game do
@@ -12,4 +13,7 @@ defmodule Hangman do
 
   @spec make_move(game, String.t()) :: {game, Type.tally()}
   defdelegate make_move(game, guess), to: Game
+
+  @spec tally(game) :: tally()
+  defdelegate tally(game), to: Game
 end
